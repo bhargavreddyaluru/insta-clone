@@ -1,0 +1,45 @@
+.slick-main-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 48px;
+  min-height: 120px;
+}
+.slick-container {
+  width: 70%;
+  max-width: 80%;
+}
+
+.logo-image {
+  height: 70px;
+  width: 70px;
+  border-radius: 35px;
+}
+.slick-item {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+}
+.slick-prev:before {
+  color: black;
+  width: 30px;
+  height: 30px;
+}
+.slick-next:before {
+  color: black;
+  width: 30px;
+  height: 30px;
+}
+.story-username {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #262626;
+  margin: 4px 0 0 0;
+}

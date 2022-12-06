@@ -1,0 +1,16 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.posts-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  min-height: 60vh;
+}
+.posts-list {
+  padding-left: 0;
+  width: 75%;
+  list-style-type: none;
+}
