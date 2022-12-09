@@ -46,7 +46,7 @@ const Home = () => {
       }
     }
     getPostsList()
-  }, [jwtToken])
+  }, [])
 
   const loadingBasedRender = () => {
     switch (loading) {

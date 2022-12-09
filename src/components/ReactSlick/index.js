@@ -47,7 +47,7 @@ const ReactSlick = () => {
       }
     }
     getStoriesList()
-  }, [jwtToken])
+  }, [])
 
   const loadingBasedRender = () => {
     switch (loading) {
