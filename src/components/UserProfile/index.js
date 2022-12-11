@@ -13,14 +13,16 @@ const loadingStatus = {
   failure: 'FAILURE',
 }
 
-const MyProfile = () => {
+const UserProfile = props => {
   const [myDetails, setMyDetails] = useState({})
   const [loading, setLoading] = useState(loadingStatus.initial)
   const jwtToken = Cookies.get('jwt_token')
+  const {match} = props
+  const {params} = match
 
   const getMyProfileDetails = async () => {
     setLoading(loadingStatus.progress)
-    const url = 'https://apis.ccbp.in/insta-share/my-profile'
+    const url = `https://apis.ccbp.in/insta-share/users/${params.id}`
     const options = {
       method: 'GET',
       headers: {
@@ -30,7 +32,8 @@ const MyProfile = () => {
     const response = await fetch(url, options)
     const data = await response.json()
     if (response.ok) {
-      const {profile} = data
+      console.log(data)
+      const profile = data.user_details
       const updatedData = {
         id: profile.id,
         userId: profile.user_id,
@@ -59,7 +62,7 @@ const MyProfile = () => {
       case loadingStatus.progress:
         return <LoadingView />
       case loadingStatus.success:
-        return <ProfileComponent details={myDetails} />
+        return <ProfileComponent details={myDetails} isUser />
       case loadingStatus.failure:
         return <SomethingWentWrong retryFunction={getMyProfileDetails} />
       default:
@@ -75,4 +78,4 @@ const MyProfile = () => {
   )
 }
 
-export default MyProfile
+export default UserProfile

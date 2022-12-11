@@ -1,8 +1,15 @@
 import React from 'react'
 
 const TabContext = React.createContext({
-  activeTab: 'HOME',
-  changeActiveTab: () => {},
+  searchResults: [],
+  changeSearchResults: () => {},
+  isSearching: 'INITIAL',
+  changeSearchingStatus: () => {},
+  isSearch: false,
+  changeSearch: () => {},
+  getSearchResults: () => {},
+  searchInput: '',
+  changeSearchInput: () => {},
 })
 
 export default TabContext

@@ -115,3 +115,6 @@
   font-weight: 400;
   margin: 8px 0;
 }
+.username-link-text {
+  text-decoration: none;
+}

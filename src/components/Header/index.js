@@ -1,35 +1,46 @@
-import {useContext} from 'react'
+import {useContext, useState} from 'react'
 import {Link, withRouter} from 'react-router-dom'
-import {FaSearch} from 'react-icons/fa'
 import Cookies from 'js-cookie'
+import {FaSearch} from 'react-icons/fa'
 import TabContext from '../../context/TabContext'
 import './index.css'
 
 const Header = props => {
-  const {activeTab, changeActiveTab} = useContext(TabContext)
+  const [searchInput, setSearchInput] = useState('')
+  const {history, match} = props
+  const {changeSearch, getSearchResults} = useContext(TabContext)
 
   const onClickLogout = () => {
-    const {history} = props
     Cookies.remove('jwt_token')
     history.replace('/login')
+  }
+
+  const onChangeSearchInput = event => {
+    setSearchInput(event.target.value)
+  }
+
+  const onClickSearchButton = async () => {
+    history.push('/')
+    getSearchResults(searchInput)
   }
 
   const renderNavItems = () => (
     <nav className="nav-container">
       <ul className="nav-items-list">
-        <Link
-          to="/"
-          className="nav-item"
-          onClick={() => changeActiveTab('HOME')}
-        >
-          <li className={activeTab === 'HOME' ? 'active' : null}>Home</li>
+        <Link to="/" className="nav-item">
+          <li
+            className={match.path === '/' ? 'active' : null}
+            onClick={() => {
+              changeSearch(false)
+            }}
+          >
+            Home
+          </li>
         </Link>
-        <Link
-          to="/my-profile"
-          className="nav-item"
-          onClick={() => changeActiveTab('PROFILE')}
-        >
-          <li className={activeTab === 'PROFILE' ? 'active' : null}>Profile</li>
+        <Link to="/my-profile" className="nav-item">
+          <li className={match.path === '/my-profile' ? 'active' : null}>
+            Profile
+          </li>
         </Link>
       </ul>
     </nav>
@@ -38,11 +49,17 @@ const Header = props => {
   const renderSearchContainer = () => (
     <div className="search-container">
       <input
-        type="text"
+        type="search"
         className="search-input"
         placeholder="Search Caption"
+        onChange={onChangeSearchInput}
+        value={searchInput}
       />
-      <button type="button" className="search-button">
+      <button
+        type="button"
+        className="search-button"
+        onClick={onClickSearchButton}
+      >
         <FaSearch />
       </button>
     </div>

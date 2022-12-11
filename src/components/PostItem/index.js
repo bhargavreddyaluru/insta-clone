@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import {Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import {BsHeart} from 'react-icons/bs'
 import {FcLike} from 'react-icons/fc'
@@ -22,6 +23,7 @@ const CommentItem = props => {
 const PostItem = props => {
   const {details} = props
   const {
+    userId,
     postId,
     userName,
     profilePic,
@@ -47,7 +49,6 @@ const PostItem = props => {
     }
     const response = await fetch(url, options)
     const data = await response.json()
-    console.log(data)
     setLikeStatus(prevState => !prevState)
     if (likeStatus) {
       setLikes(prevState => prevState + 1)
@@ -107,7 +108,9 @@ const PostItem = props => {
             className="user-icon"
           />
         </div>
-        <p className="post-username">{userName}</p>
+        <Link to={`/users/${userId}`} className="username-link-text">
+          <p className="post-username">{userName}</p>
+        </Link>
       </div>
       <img src={postDetails.image_url} alt="post" className="post-pic" />
       <div className="post-bottom-container">

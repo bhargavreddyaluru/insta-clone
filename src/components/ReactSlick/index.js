@@ -24,30 +24,57 @@ const ReactSlick = () => {
   const [loading, setLoading] = useState(loadingStatus.initial)
   const jwtToken = Cookies.get('jwt_token')
 
-  useEffect(() => {
-    const getStoriesList = async () => {
-      setLoading(loadingStatus.progress)
-      const url = 'https://apis.ccbp.in/insta-share/stories'
-      const options = {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${jwtToken}`,
-        },
-      }
-      const response = await fetch(url, options)
-      const data = await response.json()
-      if (response.ok) {
-        const updatedData = data.users_stories.map(item => ({
-          userId: item.user_id,
-          userName: item.user_name,
-          storyUrl: item.story_url,
-        }))
-        setStoriesList(updatedData)
-        setLoading(loadingStatus.success)
-      }
+  const getStoriesList = async () => {
+    setLoading(loadingStatus.progress)
+    const url = 'https://apis.ccbp.in/insta-share/stories'
+    const options = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
     }
+    const response = await fetch(url, options)
+    const data = await response.json()
+    if (response.ok) {
+      const updatedData = data.users_stories.map(item => ({
+        userId: item.user_id,
+        userName: item.user_name,
+        storyUrl: item.story_url,
+      }))
+      setStoriesList(updatedData)
+      setLoading(loadingStatus.success)
+    } else {
+      setLoading(loadingStatus.failure)
+    }
+  }
+
+  useEffect(() => {
     getStoriesList()
   }, [])
+
+  const onClickTryAgain = () => {
+    getStoriesList()
+  }
+
+  const renderFailureView = () => (
+    <div className="stories-failure-container">
+      <img
+        src="https://res.cloudinary.com/dqwufvygi/image/upload/v1666112932/Instagram%20Clone/Iconsomething-went-wrong_u66nvd.svg"
+        alt="failure view"
+        className="stories-failure-icon"
+      />
+      <p className="stories-failure-description">
+        Something went wrong. Please try again
+      </p>
+      <button
+        type="button"
+        className="stories-try-again-button"
+        onClick={onClickTryAgain}
+      >
+        Try again
+      </button>
+    </div>
+  )
 
   const loadingBasedRender = () => {
     switch (loading) {
@@ -64,7 +91,7 @@ const ReactSlick = () => {
                     <img
                       className="logo-image"
                       src={storyUrl}
-                      alt="company logo"
+                      alt="user story"
                     />
                     <p className="story-username">{userName}</p>
                   </div>
@@ -73,6 +100,8 @@ const ReactSlick = () => {
             </Slider>
           </div>
         )
+      case loadingStatus.failure:
+        return renderFailureView()
       default:
         return null
     }
