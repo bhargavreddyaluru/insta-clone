@@ -53,7 +53,7 @@ const Login = props => {
           </div>
           <div className="input-container">
             <label htmlFor="username" className="label-text">
-              USERNAME
+              USERNAME(rahul)
             </label>
             <input
               id="username"
@@ -68,7 +68,7 @@ const Login = props => {
           </div>
           <div className="input-container">
             <label htmlFor="password" className="label-text">
-              PASSWORD
+              PASSWORD(rahul@2021)
             </label>
             <input
               id="password"
